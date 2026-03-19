@@ -1,3 +1,12 @@
+這就為你將「實質課稅八大態樣」詳細列出，並透過醒目的視覺設計，讓這個國稅局查核的地雷區成為規劃書中最具價值的實務提醒。
+
+為了讓這個重點區塊夠顯眼但又不破壞整體報表的專業度，我做了以下設計：
+1. **網頁版獨立卡片：** 在網頁操作介面的最下方，將原本的「顧問實務指引」拆分，並把「保險實質課稅八大態樣」獨立成一張帶有警示邊框（深紅色/深藍色）的重點提示卡片。
+2. **列印版專屬附註：** 在列印出來的實體報表中，這八大態樣會以條列的方式，清晰地印在「規劃備註與法規提醒」的區塊內，方便業務員在向客戶解說保單規劃時，有明確的法規依據可以指認。
+
+請使用以下最新的完整程式碼取代原檔案：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -9,16 +18,18 @@
            變數與基礎設定 (專業系統風格)
            ========================================= */
         :root {
-            --primary-dark: #0f172a;   /* 極深藍/黑 */
-            --primary-main: #1e293b;   /* 深鐵灰 */
-            --primary-accent: #1d4ed8; /* 專業金融藍 */
-            --bg-body: #e2e8f0;        /* 系統背景灰 */
+            --primary-dark: #0f172a;   
+            --primary-main: #1e293b;   
+            --primary-accent: #1d4ed8; 
+            --bg-body: #e2e8f0;        
             --bg-surface: #ffffff;
             --border-color: #cbd5e1;
             --text-main: #334155;
             --text-muted: #64748b;
             --highlight: #f8fafc;
-            --danger: #b91c1c;         /* 警示/重點紅 */
+            --danger: #b91c1c;         
+            --danger-bg: #fef2f2;
+            --danger-border: #fca5a5;
         }
 
         * {
@@ -66,7 +77,7 @@
             margin: 0;
         }
 
-        /* 基本資料輸入區 - 特殊排版 */
+        /* 基本資料輸入區 */
         .basic-info-grid {
             display: flex;
             gap: 20px;
@@ -266,6 +277,7 @@
             border: 1px solid #e2e8f0;
             border-left: 4px solid var(--primary-accent);
             border-radius: 6px;
+            margin-bottom: 20px;
         }
         .advisor-guide h4 {
             margin: 0 0 15px 0;
@@ -281,43 +293,44 @@
             margin-left: 10px;
         }
         
-        /* 巢狀清單設計 */
-        .guide-list {
+        /* 實質課稅八大態樣專屬警示區塊 */
+        .tax-alert-box {
+            background-color: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            border-left: 4px solid var(--danger);
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-top: 20px;
+        }
+        .tax-alert-box h4 {
+            color: var(--danger);
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .tax-alert-box h4::before {
+            content: "⚠️";
+            margin-right: 8px;
+        }
+        
+        /* 項目清單設計 */
+        .guide-list, .alert-list {
             margin: 0;
             padding-left: 20px;
             color: var(--text-main);
         }
-        .guide-list > li {
-            margin-bottom: 15px;
+        .guide-list > li, .alert-list > li {
+            margin-bottom: 12px;
             font-size: 14.5px;
             line-height: 1.6;
             padding-left: 5px;
         }
-        .guide-list > li::marker {
-            font-weight: bold;
-            color: var(--primary-accent);
-        }
-        .guide-list > li:last-child {
-            margin-bottom: 0;
-        }
-        .guide-list strong {
-            color: var(--primary-main);
-        }
-        
-        .sub-guide-list {
-            margin: 8px 0 0 0;
-            padding-left: 20px;
-            list-style-type: disc;
-        }
-        .sub-guide-list li {
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-        .sub-guide-list li::marker {
-            color: #94a3b8;
-        }
+        .guide-list > li::marker { color: var(--primary-accent); font-weight: bold; }
+        .alert-list > li::marker { color: var(--danger); }
+        .guide-list > li:last-child, .alert-list > li:last-child { margin-bottom: 0; }
+        .guide-list strong { color: var(--primary-main); }
+        .alert-list strong { color: var(--danger); }
 
         /* 按鈕群組 */
         .button-group {
@@ -360,7 +373,7 @@
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 1.5cm 1.8cm; 
+                margin: 1.2cm 1.5cm; 
             }
             body {
                 background-color: #fff;
@@ -379,14 +392,14 @@
 
             .print-header {
                 text-align: center;
-                margin-bottom: 25px;
+                margin-bottom: 20px;
                 border-bottom: 3px double #000;
-                padding-bottom: 15px;
+                padding-bottom: 10px;
             }
             .print-header h1 {
-                font-size: 24pt;
+                font-size: 22pt;
                 color: #000;
-                margin: 0 0 15px 0;
+                margin: 0 0 10px 0;
                 letter-spacing: 5px;
             }
             .print-meta-grid {
@@ -410,11 +423,11 @@
             .fin-table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-bottom: 30px;
-                font-size: 11.5pt;
+                margin-bottom: 20px;
+                font-size: 11pt;
             }
             .fin-table th, .fin-table td {
-                padding: 10px 12px;
+                padding: 8px 12px;
                 border: 1px solid #000;
             }
             .fin-table th {
@@ -424,9 +437,7 @@
                 text-align: center;
                 letter-spacing: 2px;
             }
-            .fin-table td.col-item {
-                width: 70%;
-            }
+            .fin-table td.col-item { width: 70%; }
             .fin-table td.col-amt {
                 width: 30%;
                 text-align: right;
@@ -450,32 +461,55 @@
             .row-grand-total td {
                 border-top: 3px double #000;
                 background-color: #f1f5f9 !important;
-                font-size: 13pt;
+                font-size: 12pt;
                 font-weight: 900;
             }
             
-            .print-notes {
-                border: 1px solid #000;
-                padding: 15px 20px;
-                font-size: 10pt;
-                line-height: 1.6;
+            /* 列印版備註與八大態樣 */
+            .print-notes-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
                 break-inside: avoid;
             }
-            .print-notes h4 {
-                margin: 0 0 10px 0;
-                font-size: 11pt;
-                border-bottom: 1px dashed #94a3b8;
-                padding-bottom: 5px;
+            .print-notes {
+                border: 1px solid #000;
+                padding: 12px 15px;
+                font-size: 9.5pt;
+                line-height: 1.5;
             }
-            .print-notes ol {
+            .print-notes.alert-style {
+                border: 2px solid #000;
+                background-color: #fef2f2 !important; /* 淺粉紅底色凸顯警示 */
+            }
+            .print-notes h4 {
+                margin: 0 0 8px 0;
+                font-size: 10.5pt;
+                border-bottom: 1px dashed #000;
+                padding-bottom: 4px;
+                font-weight: bold;
+            }
+            .print-notes.alert-style h4 {
+                color: #b91c1c !important; 
+                border-bottom-color: #b91c1c;
+            }
+            .print-notes ol, .print-notes ul {
                 margin: 0;
-                padding-left: 24px;
+                padding-left: 20px;
             }
             .print-notes li {
-                margin-bottom: 8px;
+                margin-bottom: 5px;
                 text-align: justify;
-                padding-left: 4px;
             }
+            /* 八大多欄排版，節省空間 */
+            .eight-patterns-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2px 15px;
+                padding-left: 15px;
+                margin: 0;
+            }
+            .eight-patterns-list li { margin-bottom: 2px; }
         }
     </style>
 </head>
@@ -665,22 +699,35 @@
                 遺產中之土地以「公告土地現值」、房屋以「房屋評定標準價格」計算，通常遠低於市價，是常見的節稅規劃標的。
             </li>
             <li>
-                <strong>保險理賠雙重規範：</strong>
-                指定受益人之人壽保險身故理賠金免計入遺產總額。但須注意：
-                <ul class="sub-guide-list">
-                    <li><strong>實質課稅原則：</strong>若有高齡、重病、躉繳、密集投保等八大特徵，國稅局仍可能依實質課稅原則併入遺產課徵。</li>
-                    <li><strong>最低稅負制：</strong>若「要保人與受益人非同一人」，受益人領取之給付須計入當年度個人基本所得額（每一申報戶享 3,740 萬元免稅額）。</li>
-                </ul>
+                <strong>保險最低稅負制：</strong>
+                若保單「要保人與受益人非同一人」，身故受益人領取之給付須計入當年度個人基本所得額（每一申報戶享 3,740 萬元免稅額）。
+            </li>
+            <li>
+                <strong>配偶請求權重點：</strong>
+                「配偶剩餘財產差額分配請求權」是降低課稅級距的強大工具，但其計算基數依法必須「排除」因繼承、無償取得之財產及慰撫金。
             </li>
             <li>
                 <strong>拋棄繼承限制：</strong>
                 若繼承人拋棄繼承，依法將「無法扣除」該名繼承人之各項親屬扣除額。
             </li>
-            <li>
-                <strong>配偶請求權重點：</strong>
-                「配偶剩餘財產差額分配請求權」是降低課稅級距的強大工具，但其計算基數依法必須「排除」因繼承、其他無償取得之財產及慰撫金。
-            </li>
         </ol>
+    </div>
+
+    <div class="tax-alert-box">
+        <h4>國稅局保險實質課稅「八大態樣」地雷區</h4>
+        <ul class="alert-list">
+            <li><strong>高齡投保：</strong> 投保時年齡已高，且接近法定平均餘命。</li>
+            <li><strong>重病投保：</strong> 投保時已帶有重大疾病或於短期內身故。</li>
+            <li><strong>躉繳保費：</strong> 一次繳清鉅額保險費。</li>
+            <li><strong>密集投保：</strong> 於短期內連續購買多張保單。</li>
+            <li><strong>短期身故：</strong> 投保後短期內即身故，且未留有合理期間之保單價值。</li>
+            <li><strong>鉅額投保：</strong> 保險費與被繼承人之財力顯不相當。</li>
+            <li><strong>舉債投保：</strong> 向銀行或他人借款以繳納保險費。</li>
+            <li><strong>保險給付相當於已繳保費：</strong> 繳納之保費與身故理賠金金額相近，缺乏保險風險移轉之實質。</li>
+        </ul>
+        <p style="margin: 12px 0 0 0; font-size: 13.5px; color: var(--danger); font-weight: bold;">
+            * 只要保單具有上述特徵，國稅局將依「實質課稅原則」，否准適用遺贈稅法第16條第9款之免稅規定，全數併入遺產課徵遺產稅。
+        </p>
     </div>
 
     <div class="button-group">
@@ -778,14 +825,32 @@
         </tbody>
     </table>
 
-    <div class="print-notes">
-        <h4>規劃備註與法規提醒</h4>
-        <ol>
-            <li><strong>剩餘財產差額分配請求權：</strong>計算婚後財產時，依法必須「排除」因繼承、其他無償取得之財產（如贈與）及慰撫金。</li>
-            <li><strong>人壽保險理賠金：</strong>依據《遺贈稅法》規定，約定給付其所「指定受益人」之人壽保險金額，全額免計入遺產總額。惟投保行為若有明顯避稅特徵（如高齡、重病投保），仍可能依實質課稅原則併入課稅。</li>
-            <li><strong>最低稅負制：</strong>若保單之「要保人」與「受益人」非同一人，受益人領取之死亡給付須計入基本所得額。每一申報戶享有 3,740 萬元免稅額。</li>
-            <li><strong>免責聲明：</strong>本報告書採用 114 年度稅法標準試算，資料僅供內部財務規劃與討論參考，實際核定稅額及適用法規，概以財政部國稅局最終審查結果為準。</li>
-        </ol>
+    <div class="print-notes-container">
+        <div class="print-notes">
+            <h4>規劃備註與法規提醒</h4>
+            <ol>
+                <li><strong>配偶請求權：</strong>計算婚後財產時，依法必須「排除」因繼承、其他無償取得之財產及慰撫金。</li>
+                <li><strong>最低稅負制：</strong>若保單之「要保人」與「受益人」非同一人，受益人領取之死亡給付須計入基本所得額。每一申報戶享有 3,740 萬元免稅額。</li>
+                <li><strong>免責聲明：</strong>本報告書採用 114 年度稅法標準試算，資料僅供內部財務規劃與討論參考，實際核定稅額以財政部國稅局最終審查為準。</li>
+            </ol>
+        </div>
+
+        <div class="print-notes alert-style">
+            <h4>⚠️ 注意：國稅局保險「實質課稅」八大查核態樣</h4>
+            <ul class="eight-patterns-list">
+                <li>1. <strong>高齡投保</strong></li>
+                <li>2. <strong>重病投保</strong></li>
+                <li>3. <strong>躉繳保費</strong> (一次繳清)</li>
+                <li>4. <strong>密集投保</strong></li>
+                <li>5. <strong>短期身故</strong></li>
+                <li>6. <strong>鉅額投保</strong></li>
+                <li>7. <strong>舉債投保</strong></li>
+                <li>8. <strong>給付相當於已繳保費</strong></li>
+            </ul>
+            <p style="margin: 6px 0 0 0; font-size: 9pt; font-weight: bold; padding-left: 15px; color: #b91c1c;">
+                * 註：人壽保險理賠金依法免計入遺產總額。惟投保行為若具備上述特徵，國稅局將依「實質課稅原則」併入遺產課稅。
+            </p>
+        </div>
     </div>
 </div>
 
@@ -914,7 +979,7 @@
             }
         }
 
-        // --- 4. 更新 Web UI (含動態扣除表明細) ---
+        // --- 4. 更新 Web UI ---
         document.getElementById('lbl-spouse-deduct').innerText = hasSpouse ? "553" : "0";
         document.getElementById('web-totalDeductionsText').innerText = formatNumber(totalDeductions);
         document.getElementById('web-netEstateText').innerText = formatNumber(netEstate);
@@ -936,7 +1001,7 @@
         
         document.getElementById('desc-total-deductions').innerHTML = breakdownHTML;
 
-        // --- 5. 同步 Print UI (報表表格填充) ---
+        // --- 5. 同步 Print UI ---
         document.getElementById('out-customerName').innerText = customerName;
         document.getElementById('out-evalDate').innerText = evalDate;
         
@@ -958,3 +1023,4 @@
 
 </body>
 </html>
+```
