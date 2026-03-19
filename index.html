@@ -750,316 +750,295 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       PRINT STYLES — Dark Luxury A4 Report (質感完整保留)
-       全程保留深色背景、金色設計語言，與螢幕版視覺一致
+       PRINT-ONLY REPORT — 單頁深色質感財務報告
+       隱藏輸入介面，僅呈現試算明細與稅率級距
        ══════════════════════════════════════════════════════ */
+
+    /* 螢幕上隱藏列印報告 */
+    .print-report { display: none; }
+
     @media print {
       @page {
         size: A4 portrait;
-        margin: 1.2cm 1.6cm;
+        margin: 1.4cm 1.8cm;
       }
 
-      /* 強制印出所有背景色彩 */
       * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         color-adjust: exact !important;
       }
 
-      body {
-        background-color: #060912 !important;
-        background-image:
-          radial-gradient(ellipse 80% 40% at 50% 0%, rgba(197,163,107,0.07) 0%, transparent 60%) !important;
-        color: #f0ece4 !important;
-        font-size: 9.5pt;
-        line-height: 1.6;
-      }
+      /* 隱藏整個網頁操作介面 */
+      .app-wrap { display: none !important; }
 
-      .app-wrap {
+      /* 顯示專屬列印報告 */
+      .print-report {
+        display: block !important;
+        background-color: #060912;
+        background-image: radial-gradient(ellipse 100% 35% at 50% 0%, rgba(197,163,107,0.09) 0%, transparent 55%);
+        color: #f0ece4;
+        font-family: 'Noto Serif TC', 'Cormorant Garamond', serif;
+        min-height: 100vh;
         padding: 0;
-        max-width: 100%;
       }
 
-      /* ── 隱藏互動元素 ── */
-      .actions,
-      .info-btn,
-      .info-drawer,
-      .footer { display: none !important; }
-
-      /* ── Hero ── */
-      .hero {
-        margin-bottom: 22pt;
-        padding-bottom: 16pt;
-        border-bottom: 1px solid rgba(197,163,107,0.35);
+      /* ── 報告 Header ── */
+      .pr-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding-bottom: 18pt;
+        border-bottom: 1px solid rgba(197,163,107,0.4);
+        margin-bottom: 28pt;
       }
-      .hero::before, .hero::after { display: none; }
-      .hero-eyebrow {
-        color: #c5a36b !important;
-        font-size: 7.5pt;
-        letter-spacing: 0.25em;
-      }
-      .hero h1 {
-        font-size: 26pt;
-        color: #f0ece4 !important;
-        font-weight: 300;
-      }
-      .hero h1 em { color: #c5a36b !important; }
-      .hero-sub { color: #94a3b8 !important; font-size: 8pt; }
-
-      /* ── Meta bar ── */
-      .meta-bar {
-        background: #161d2e !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        border-top: 1px solid #c5a36b !important;
-        padding: 12pt 16pt;
-        margin-bottom: 18pt;
-        border-radius: 4pt;
-      }
-      .meta-field label {
-        color: #94a3b8 !important;
+      .pr-header-left {}
+      .pr-eyebrow {
+        font-family: 'DM Mono', monospace;
         font-size: 7pt;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.25em;
+        color: #c5a36b;
+        text-transform: uppercase;
+        margin-bottom: 6pt;
       }
-      .meta-field input {
-        color: #f0ece4 !important;
-        border-bottom: 1px solid rgba(255,255,255,0.12) !important;
-        background: transparent !important;
+      .pr-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22pt;
+        font-weight: 300;
+        color: #f0ece4;
+        letter-spacing: 0.04em;
+        line-height: 1.2;
+      }
+      .pr-title em { font-style: normal; color: #c5a36b; }
+      .pr-header-right {
+        text-align: right;
+      }
+      .pr-meta-item {
+        font-family: 'DM Mono', monospace;
+        font-size: 8pt;
+        color: #94a3b8;
+        letter-spacing: 0.1em;
+        margin-bottom: 5pt;
+        line-height: 1.8;
+      }
+      .pr-meta-item strong {
+        color: #f0ece4;
+        font-weight: 400;
+        margin-left: 8pt;
+      }
+
+      /* ── 主體雙欄 ── */
+      .pr-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16pt;
+        margin-bottom: 18pt;
+      }
+
+      /* ── 卡片通用 ── */
+      .pr-card {
+        background: #161d2e;
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 5pt;
+        overflow: hidden;
+      }
+      .pr-card-header {
+        background: #0a0e1a;
+        padding: 10pt 16pt;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        align-items: center;
+        gap: 8pt;
+      }
+      .pr-card-header-dot {
+        width: 3pt; height: 14pt;
+        background: #c5a36b;
+        border-radius: 2pt;
+        flex-shrink: 0;
+      }
+      .pr-card-title {
+        font-family: 'DM Mono', monospace;
+        font-size: 8pt;
+        letter-spacing: 0.18em;
+        color: #c5a36b;
+        text-transform: uppercase;
+      }
+
+      /* ── 明細列 ── */
+      .pr-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11pt 16pt;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .pr-row:last-child { border-bottom: none; }
+      .pr-row-label {
+        font-size: 9.5pt;
+        color: #94a3b8;
+        line-height: 1.4;
+      }
+      .pr-row-val {
+        font-family: 'DM Mono', monospace;
+        font-size: 10pt;
+        color: #f0ece4;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+        margin-left: 12pt;
+      }
+      .pr-row-val.gold { color: #c5a36b; }
+
+      /* 子項目縮排 */
+      .pr-row.indent .pr-row-label {
+        padding-left: 12pt;
+        font-size: 8.5pt;
+        color: rgba(148,163,184,0.65);
+        position: relative;
+      }
+      .pr-row.indent .pr-row-label::before {
+        content: '↳';
+        position: absolute;
+        left: 0;
+        color: rgba(197,163,107,0.4);
+        font-size: 8pt;
+      }
+      .pr-row.indent .pr-row-val {
+        font-size: 9pt;
+        color: rgba(240,236,228,0.6);
+      }
+
+      /* 小計列 */
+      .pr-row.subtotal {
+        background: rgba(197,163,107,0.05);
+        border-top: 1px solid rgba(197,163,107,0.2);
+        border-bottom: none;
+        padding: 12pt 16pt;
+      }
+      .pr-row.subtotal .pr-row-label {
+        font-size: 10pt;
+        color: #c5a36b;
+        font-weight: 600;
+      }
+      .pr-row.subtotal .pr-row-val {
+        color: #c5a36b;
         font-size: 11pt;
       }
 
-      /* ── Section labels ── */
-      .section-label { margin: 18pt 0 8pt; }
-      .section-num { color: #c5a36b !important; font-size: 7.5pt; }
-      .section-title { color: #f0ece4 !important; font-size: 10pt; }
-      .section-line { background: rgba(255,255,255,0.07) !important; }
-
-      /* ── Input cards ── */
-      .input-card {
-        background: #161d2e !important;
-        border: 1px solid rgba(255,255,255,0.06) !important;
-        border-radius: 3pt;
-        margin-bottom: 3pt;
-      }
-      .input-row { padding: 8pt 14pt; }
-      .input-row-label {
-        font-size: 9.5pt;
-        color: rgba(240,236,228,0.8) !important;
-      }
-      .badge {
-        background: rgba(197,163,107,0.15) !important;
-        color: #c5a36b !important;
-        font-size: 7pt;
-        padding: 1pt 5pt;
-      }
-      .static-val {
-        color: #94a3b8 !important;
-        font-size: 9.5pt;
-      }
-      .spouse-deduct-val {
-        color: #c5a36b !important;
-        font-size: 9.5pt;
-      }
-      input[type="number"],
-      input[type="text"] {
-        background: rgba(255,255,255,0.04) !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        color: #f0ece4 !important;
-        font-size: 9.5pt;
-        padding: 4pt 10pt;
-        border-radius: 2pt;
-        width: 130pt;
-      }
-      input[type="number"]:disabled {
-        background: transparent !important;
-        border: none !important;
-        color: #e2c98a !important;
-        font-weight: 600;
-      }
-      input[type="date"] { display: none; } /* 日期欄位列印版只顯示值 */
-
-      /* ── Spouse block ── */
-      .spouse-block {
-        border-left: 3px solid #c5a36b !important;
-        background: rgba(197,163,107,0.05) !important;
-        border: 1px solid rgba(197,163,107,0.15) !important;
-      }
-      .spouse-note {
-        background: rgba(0,0,0,0.2) !important;
-        color: #94a3b8 !important;
-        font-size: 8pt;
-      }
-      .spouse-note strong { color: #c5a36b !important; }
-      .checkbox-wrap { display: none; } /* 隱藏 checkbox，只顯示值 */
-
-      /* ── Results Panel ── */
-      .results-panel {
-        background: #111827 !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        border-radius: 4pt;
-        break-inside: avoid;
-        margin-top: 18pt;
-      }
-      .results-header {
-        background: #060912 !important;
-        border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-        padding: 14pt 22pt;
-      }
-      .results-header-text {
-        color: #f0ece4 !important;
-        font-size: 12pt;
-      }
-      .results-header-sub { color: #94a3b8 !important; font-size: 7pt; }
-      .year-tag {
-        color: #c5a36b !important;
-        border-color: rgba(197,163,107,0.4) !important;
-        font-size: 7.5pt;
-        padding: 3pt 8pt;
-      }
-      .results-body { padding: 12pt 22pt; }
-
-      .result-row { border-bottom: 1px solid rgba(255,255,255,0.05) !important; padding: 9pt 0; }
-      .result-row-label { color: #94a3b8 !important; font-size: 9pt; }
-      .result-row-val { color: #f0ece4 !important; font-size: 10pt; }
-
-      /* Breakdown */
-      .breakdown-toggle {
-        border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-        padding: 9pt 0;
-        cursor: default;
-      }
-      .breakdown-toggle .result-row-label { color: #94a3b8 !important; }
-      .breakdown-arrow { display: none; }
-      .breakdown-detail { display: block !important; padding: 4pt 0 10pt 14pt; }
-      .breakdown-item { padding: 4pt 0; }
-      .breakdown-item span:first-child { color: rgba(148,163,184,0.6) !important; font-size: 8.5pt; }
-      .breakdown-item span:last-child { color: #94a3b8 !important; font-size: 8.5pt; }
-
-      /* Bracket */
-      .bracket-display { padding: 9pt 0; border-bottom: 1px solid rgba(255,255,255,0.05) !important; }
-      .bracket-label { color: #94a3b8 !important; font-size: 9pt; }
-      .bracket-pill {
-        font-size: 10pt !important;
-        padding: 3pt 12pt !important;
-        border-radius: 12pt !important;
-      }
-      .bracket-0  { background: rgba(148,163,184,0.1) !important; color: #94a3b8 !important; }
-      .bracket-10 { background: rgba(16,185,129,0.15) !important; color: #10b981 !important; }
-      .bracket-15 { background: rgba(245,158,11,0.15) !important; color: #f59e0b !important; }
-      .bracket-20 { background: rgba(239,68,68,0.15)  !important; color: #ef4444 !important; }
-      .bracket-scale { margin-top: 6pt; width: 140pt; }
-      .bracket-seg {
-        height: 2pt !important;
-        background: rgba(255,255,255,0.08) !important;
-      }
-      .bracket-seg.active-10 { background: #10b981 !important; }
-      .bracket-seg.active-15 { background: #f59e0b !important; }
-      .bracket-seg.active-20 { background: #ef4444 !important; }
-
-      /* Grand total */
-      .grand-total {
-        background: linear-gradient(135deg, rgba(197,163,107,0.1), rgba(197,163,107,0.04)) !important;
-        border: 1px solid rgba(197,163,107,0.25) !important;
-        border-radius: 4pt;
-        padding: 18pt 22pt;
-        margin: 12pt 22pt 22pt;
-      }
-      .grand-label { color: #94a3b8 !important; font-size: 10pt; }
-      .grand-sublabel { color: rgba(148,163,184,0.5) !important; font-size: 7pt; }
-      .grand-amount { color: #e2c98a !important; font-size: 34pt; }
-      .grand-unit { color: #94a3b8 !important; font-size: 8pt; }
-
-      /* Bracket ref */
-      .bracket-ref {
-        background: rgba(0,0,0,0.25) !important;
-        border: 1px solid rgba(255,255,255,0.06) !important;
-        border-radius: 4pt;
-        margin-top: 6pt;
+      /* ── 稅率級距卡 ── */
+      .pr-bracket-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 1px;
+        background: rgba(255,255,255,0.05);
       }
-      .bracket-ref-item { background: #161d2e !important; padding: 10pt 14pt; }
-      .bracket-ref-item .tier { font-size: 14pt; }
-      .bracket-ref-item .range { color: #94a3b8 !important; font-size: 8pt; }
-      .tier-10 { color: #10b981 !important; }
-      .tier-15 { color: #f59e0b !important; }
-      .tier-20 { color: #ef4444 !important; }
-
-      /* ── Eight Patterns ── */
-      .patterns-section { margin-top: 20pt; page-break-before: always; }
-      .patterns-intro {
-        background: rgba(245,158,11,0.1) !important;
-        border: 1px solid rgba(245,158,11,0.2) !important;
-        color: rgba(240,236,228,0.8) !important;
-        font-size: 8.5pt;
-        padding: 12pt 16pt;
-        border-radius: 4pt;
-        margin-bottom: 12pt;
+      .pr-bracket-item {
+        background: #161d2e;
+        padding: 12pt 14pt;
+        text-align: center;
       }
-      .patterns-intro strong { color: #f59e0b !important; }
-
-      .patterns-grid {
-        gap: 8pt;
-        grid-template-columns: repeat(2, 1fr);
+      .pr-bracket-item.active-bracket {
+        background: #1a2438;
+        border-top: 2px solid;
       }
-      .pattern-card {
-        background: #161d2e !important;
-        border: 1px solid rgba(255,255,255,0.07) !important;
-        border-radius: 4pt;
-        padding: 14pt 16pt;
-        break-inside: avoid;
-        position: relative;
-        overflow: hidden;
-      }
-      .pattern-card::before {
-        background: #f59e0b !important;
-        opacity: 0.6 !important;
-        width: 3px !important;
-      }
-      .pattern-num {
-        color: rgba(245,158,11,0.25) !important;
-        font-size: 26pt;
+      .pr-bracket-item.active-bracket.t10 { border-color: #10b981; }
+      .pr-bracket-item.active-bracket.t15 { border-color: #f59e0b; }
+      .pr-bracket-item.active-bracket.t20 { border-color: #ef4444; }
+      .pr-bracket-rate {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22pt;
+        font-weight: 300;
+        line-height: 1;
         margin-bottom: 6pt;
       }
-      .pattern-name {
-        color: #f0ece4 !important;
-        font-size: 10.5pt;
+      .pr-bracket-item:nth-child(1) .pr-bracket-rate { color: #10b981; }
+      .pr-bracket-item:nth-child(2) .pr-bracket-rate { color: #f59e0b; }
+      .pr-bracket-item:nth-child(3) .pr-bracket-rate { color: #ef4444; }
+      .pr-bracket-range {
+        font-family: 'DM Mono', monospace;
+        font-size: 7pt;
+        color: #94a3b8;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+      }
+      .pr-bracket-active-label {
+        font-family: 'DM Mono', monospace;
+        font-size: 7pt;
+        margin-top: 6pt;
+        padding: 2pt 6pt;
+        border-radius: 2pt;
+        display: inline-block;
+      }
+      .t10 .pr-bracket-active-label { background: rgba(16,185,129,0.15); color: #10b981; }
+      .t15 .pr-bracket-active-label { background: rgba(245,158,11,0.15); color: #f59e0b; }
+      .t20 .pr-bracket-active-label { background: rgba(239,68,68,0.15);  color: #ef4444; }
+
+      /* ── 應納稅額大字 ── */
+      .pr-grand {
+        background: linear-gradient(135deg, rgba(197,163,107,0.1), rgba(197,163,107,0.03));
+        border: 1px solid rgba(197,163,107,0.25);
+        border-radius: 5pt;
+        padding: 20pt 24pt;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0;
+      }
+      .pr-grand-left {}
+      .pr-grand-eyebrow {
+        font-family: 'DM Mono', monospace;
+        font-size: 7pt;
+        letter-spacing: 0.2em;
+        color: #94a3b8;
+        text-transform: uppercase;
         margin-bottom: 5pt;
       }
-      .pattern-desc {
-        color: #94a3b8 !important;
+      .pr-grand-label {
+        font-size: 11pt;
+        color: rgba(240,236,228,0.85);
+        letter-spacing: 0.05em;
+      }
+      .pr-grand-right { text-align: right; }
+      .pr-grand-amount {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 42pt;
+        font-weight: 300;
+        color: #e2c98a;
+        letter-spacing: 0.02em;
+        line-height: 1;
+      }
+      .pr-grand-unit {
+        font-family: 'DM Mono', monospace;
         font-size: 8pt;
-        line-height: 1.6;
+        color: #94a3b8;
+        margin-top: 4pt;
+        letter-spacing: 0.1em;
       }
-      .pattern-risk {
-        color: #f59e0b !important;
-        font-size: 7.5pt;
-        margin-top: 8pt;
-      }
-      .pattern-risk::before { color: #f59e0b !important; }
 
-      .patterns-footer {
-        background: rgba(0,0,0,0.3) !important;
-        border: 1px solid rgba(255,255,255,0.05) !important;
-        color: rgba(148,163,184,0.7) !important;
-        font-size: 8pt;
-        padding: 10pt 14pt;
-        border-radius: 4pt;
-        margin-top: 10pt;
+      /* ── Footer 免責聲明 ── */
+      .pr-footer {
+        margin-top: 18pt;
+        padding-top: 12pt;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
       }
-      .patterns-footer strong { color: #f59e0b !important; }
-
-      /* ── Planning Guide ── */
-      .guide-section { margin-top: 18pt; page-break-before: always; }
-      .guide-grid { gap: 8pt; }
-      .guide-card {
-        background: #161d2e !important;
-        border: 1px solid rgba(255,255,255,0.07) !important;
-        border-radius: 4pt;
-        padding: 14pt 16pt;
-        break-inside: avoid;
+      .pr-disclaimer {
+        font-family: 'DM Mono', monospace;
+        font-size: 6.5pt;
+        color: rgba(148,163,184,0.4);
+        line-height: 1.7;
+        letter-spacing: 0.05em;
+        max-width: 70%;
       }
-      .guide-title { color: #f0ece4 !important; font-size: 9.5pt; }
-      .guide-body { color: #94a3b8 !important; font-size: 8pt; line-height: 1.6; }
-      .guide-body strong { color: #c5a36b !important; }
+      .pr-footer-logo {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 10pt;
+        font-weight: 300;
+        color: rgba(197,163,107,0.35);
+        letter-spacing: 0.15em;
+        text-align: right;
+      }
     }
   </style>
 </head>
@@ -1689,6 +1668,50 @@
     bdRow("bd-dis",     "bd-dis-val",     disabilityDed);
     bdRow("bd-debt",    "bd-debt-val",    unpaidDebt);
     bdRow("bd-tax",     "bd-tax-val",     unpaidTaxes);
+
+    // ── Sync Print Report ──
+    const customerName = document.getElementById("customerName").value || "貴賓";
+    const evalDateRaw  = document.getElementById("evalDate").value;
+    const evalDateDisp = evalDateRaw ? evalDateRaw.replace(/-/g, " / ") : "—";
+
+    setText("pr-name",        customerName);
+    setText("pr-date",        evalDateDisp);
+    setText("pr-total-estate", fmtW(totalEstate));
+    setText("pr-exemption",   "1,333 萬");
+    setText("pr-funeral",     "138 萬");
+
+    // 動態扣除項目列
+    prRow("pr-row-spouse",   "pr-val-spouse",   spouseDeduction > 0, fmtW(spouseDeduction));
+    prRow("pr-row-claim",    "pr-val-claim",    spousalClaim > 0,    fmtW(spousalClaim));
+    prRow("pr-row-desc",     "pr-val-desc",     descendantDed > 0,   fmtW(descendantDed));
+    prRow("pr-row-parent",   "pr-val-parent",   parentDed > 0,       fmtW(parentDed));
+    prRow("pr-row-dis",      "pr-val-dis",      disabilityDed > 0,   fmtW(disabilityDed));
+    prRow("pr-row-debt",     "pr-val-debt",     unpaidDebt > 0,      fmtW(unpaidDebt));
+    prRow("pr-row-taxown",   "pr-val-taxown",   unpaidTaxes > 0,     fmtW(unpaidTaxes));
+
+    setText("pr-total-ded",  fmtW(totalDeductions + EXEMPTION));
+    setText("pr-net-estate", fmtW(netEstate));
+    setText("pr-tax-amount", fmt(taxPayable));
+
+    // 稅率級距 highlight
+    ["pr-bi-10","pr-bi-15","pr-bi-20"].forEach(id => {
+      document.getElementById(id).classList.remove("active-bracket","t10","t15","t20");
+    });
+    if (taxRate === 10) document.getElementById("pr-bi-10").classList.add("active-bracket","t10");
+    if (taxRate === 15) document.getElementById("pr-bi-15").classList.add("active-bracket","t15");
+    if (taxRate === 20) document.getElementById("pr-bi-20").classList.add("active-bracket","t20");
+  }
+
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+  }
+
+  function prRow(rowId, valId, show, val) {
+    const row = document.getElementById(rowId);
+    if (!row) return;
+    row.style.display = show ? "flex" : "none";
+    if (show) setText(valId, val);
   }
 
   /* ═══════════════════════════════════════
@@ -1700,10 +1723,165 @@
     const m = String(today.getMonth() + 1).padStart(2, "0");
     const d = String(today.getDate()).padStart(2, "0");
     document.getElementById("evalDate").value = `${y}-${m}-${d}`;
-    // Open breakdown by default
     document.getElementById("breakdown-detail").classList.add("show");
     calculateTax();
   };
 </script>
+
+<!-- ══════════════════════════════════════════════════
+     列印專屬報告 — 螢幕隱藏，列印時顯示
+     ══════════════════════════════════════════════════ -->
+<div class="print-report">
+
+  <!-- Header -->
+  <div class="pr-header">
+    <div class="pr-header-left">
+      <div class="pr-eyebrow">Estate &amp; Inheritance Tax Planning · Professional Edition</div>
+      <div class="pr-title">資產傳承<em>稅額</em>試算報告書</div>
+    </div>
+    <div class="pr-header-right">
+      <div class="pr-meta-item">CLIENT &nbsp;<strong id="pr-name">—</strong></div>
+      <div class="pr-meta-item">DATE &nbsp;<strong id="pr-date">—</strong></div>
+      <div class="pr-meta-item">STANDARD &nbsp;<strong>114 年度稅法 · 新台幣萬元</strong></div>
+    </div>
+  </div>
+
+  <!-- Body: 雙欄 -->
+  <div class="pr-body">
+
+    <!-- 左欄：財產 + 扣除明細 -->
+    <div>
+      <div class="pr-card">
+        <div class="pr-card-header">
+          <div class="pr-card-header-dot"></div>
+          <span class="pr-card-title">財產與扣除明細</span>
+        </div>
+
+        <div class="pr-row">
+          <span class="pr-row-label">遺產總額估值</span>
+          <span class="pr-row-val" id="pr-total-estate">—</span>
+        </div>
+        <div class="pr-row">
+          <span class="pr-row-label">減：法定免稅額</span>
+          <span class="pr-row-val gold" id="pr-exemption">—</span>
+        </div>
+        <div class="pr-row">
+          <span class="pr-row-label">減：喪葬費固定扣除額</span>
+          <span class="pr-row-val gold" id="pr-funeral">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-spouse">
+          <span class="pr-row-label">減：配偶扣除額</span>
+          <span class="pr-row-val gold" id="pr-val-spouse">—</span>
+        </div>
+        <div class="pr-row indent" id="pr-row-claim">
+          <span class="pr-row-label">剩餘財產差額分配請求權</span>
+          <span class="pr-row-val" id="pr-val-claim">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-desc">
+          <span class="pr-row-label">減：直系血親卑親屬扣除額</span>
+          <span class="pr-row-val gold" id="pr-val-desc">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-parent">
+          <span class="pr-row-label">減：父母扣除額</span>
+          <span class="pr-row-val gold" id="pr-val-parent">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-dis">
+          <span class="pr-row-label">減：重度身心障礙扣除額</span>
+          <span class="pr-row-val gold" id="pr-val-dis">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-debt">
+          <span class="pr-row-label">減：死亡前未償債務</span>
+          <span class="pr-row-val gold" id="pr-val-debt">—</span>
+        </div>
+        <div class="pr-row" id="pr-row-taxown">
+          <span class="pr-row-label">減：應納未納各項稅捐</span>
+          <span class="pr-row-val gold" id="pr-val-taxown">—</span>
+        </div>
+
+        <div class="pr-row subtotal">
+          <span class="pr-row-label">免稅額與扣除額合計</span>
+          <span class="pr-row-val" id="pr-total-ded">—</span>
+        </div>
+        <div class="pr-row subtotal" style="background:rgba(197,163,107,0.08); border-top: 1px solid rgba(197,163,107,0.3);">
+          <span class="pr-row-label">課稅遺產淨額</span>
+          <span class="pr-row-val" id="pr-net-estate">—</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 右欄：稅率級距 + 稅額 -->
+    <div style="display:flex; flex-direction:column; gap:14pt;">
+
+      <!-- 稅率級距對照 -->
+      <div class="pr-card">
+        <div class="pr-card-header">
+          <div class="pr-card-header-dot"></div>
+          <span class="pr-card-title">114 年度課稅級距對照</span>
+        </div>
+        <div class="pr-bracket-grid">
+          <div class="pr-bracket-item" id="pr-bi-10">
+            <div class="pr-bracket-rate">10%</div>
+            <div class="pr-bracket-range">淨額<br>5,621 萬以下</div>
+            <div class="pr-bracket-active-label">適用中</div>
+          </div>
+          <div class="pr-bracket-item" id="pr-bi-15">
+            <div class="pr-bracket-rate">15%</div>
+            <div class="pr-bracket-range">淨額<br>5,621 ～ 11,242 萬</div>
+            <div class="pr-bracket-active-label">適用中</div>
+          </div>
+          <div class="pr-bracket-item" id="pr-bi-20">
+            <div class="pr-bracket-rate">20%</div>
+            <div class="pr-bracket-range">淨額<br>11,242 萬以上</div>
+            <div class="pr-bracket-active-label">適用中</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 速算公式說明 -->
+      <div class="pr-card">
+        <div class="pr-card-header">
+          <div class="pr-card-header-dot"></div>
+          <span class="pr-card-title">速算扣除數</span>
+        </div>
+        <div class="pr-row">
+          <span class="pr-row-label">10% 級距</span>
+          <span class="pr-row-val">淨額 × 10%</span>
+        </div>
+        <div class="pr-row">
+          <span class="pr-row-label">15% 級距</span>
+          <span class="pr-row-val">淨額 × 15% − 281.05 萬</span>
+        </div>
+        <div class="pr-row">
+          <span class="pr-row-label">20% 級距</span>
+          <span class="pr-row-val">淨額 × 20% − 843.15 萬</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /pr-body -->
+
+  <!-- 應納稅額大字 -->
+  <div class="pr-grand">
+    <div class="pr-grand-left">
+      <div class="pr-grand-eyebrow">Estimated Estate Tax Payable</div>
+      <div class="pr-grand-label">預估應納遺產稅額</div>
+    </div>
+    <div class="pr-grand-right">
+      <div class="pr-grand-amount" id="pr-tax-amount">0</div>
+      <div class="pr-grand-unit">萬元 &nbsp;·&nbsp; NTD</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="pr-footer">
+    <div class="pr-disclaimer">
+      本報告採 114 年度遺產及贈與稅法標準試算，資料僅供財務規劃討論參考。<br>
+      實際核定稅額概以國稅局最終審查結果為準。Confidential · For Discussion Only.
+    </div>
+    <div class="pr-footer-logo">ESTATE PLANNING</div>
+  </div>
+
+</div><!-- /print-report -->
 </body>
 </html>
