@@ -1,10 +1,6 @@
-這就為你將「實質課稅八大態樣」詳細列出，並透過醒目的視覺設計，讓這個國稅局查核的地雷區成為規劃書中最具價值的實務提醒。
+已經為你將網頁介面最上方的標題與說明文字（「遺產稅財務規劃系統」與稅法標準說明）完全移除。這樣整個系統看起來會更俐落，也非常適合直接嵌入到你們公司內部的其他系統或網頁中使用，不會有標題重複的問題。
 
-為了讓這個重點區塊夠顯眼但又不破壞整體報表的專業度，我做了以下設計：
-1. **網頁版獨立卡片：** 在網頁操作介面的最下方，將原本的「顧問實務指引」拆分，並把「保險實質課稅八大態樣」獨立成一張帶有警示邊框（深紅色/深藍色）的重點提示卡片。
-2. **列印版專屬附註：** 在列印出來的實體報表中，這八大態樣會以條列的方式，清晰地印在「規劃備註與法規提醒」的區塊內，方便業務員在向客戶解說保單規劃時，有明確的法規依據可以指認。
-
-請使用以下最新的完整程式碼取代原檔案：
+請使用以下最新的完整程式碼取代原檔案（列印時的正式報表表頭依然為你保留，以確保紙本報告的專業度）：
 
 ```html
 <!DOCTYPE html>
@@ -57,24 +53,6 @@
             border-radius: 4px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             border-top: 5px solid var(--primary-accent);
-        }
-        
-        .web-header-section {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--primary-dark);
-            text-align: center;
-        }
-        .web-header-section h1 {
-            color: var(--primary-dark);
-            margin: 0 0 10px 0;
-            font-size: 26px;
-            letter-spacing: 2px;
-        }
-        .web-header-section p {
-            color: var(--text-muted);
-            font-size: 13.5px;
-            margin: 0;
         }
 
         /* 基本資料輸入區 */
@@ -516,10 +494,6 @@
 <body>
 
 <div class="web-container">
-    <div class="web-header-section">
-        <h1>遺產稅財務規劃系統</h1>
-        <p>114年度稅法標準 ｜ 金額單位：新台幣 (萬元)</p>
-    </div>
 
     <div class="basic-info-grid">
         <div class="form-row">
