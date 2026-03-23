@@ -502,21 +502,23 @@
         }
 
         /* =========================================
-           列印版報告介面 (Print UI) - 強制單頁收斂版
+           列印版報告介面 (Print UI) - ★ 極限壓縮單頁版 ★
            ========================================= */
         .print-container { display: none; }
 
         @media print {
             @page {
                 size: A4 portrait;
-                margin: 1.2cm 1.5cm; /* 縮小上下左右邊界，爭取最大可用空間 */
+                margin: 0.8cm 1cm; /* 極度壓縮硬體列印邊界 */
             }
-            body {
+            html, body {
                 background-color: #fff;
                 padding: 0;
+                margin: 0;
                 color: #000;
                 -webkit-print-color-adjust: exact; 
                 print-color-adjust: exact;
+                height: 100%; /* 防禦機制：避免被撐破 */
             }
             
             .web-container { display: none !important; }
@@ -524,26 +526,28 @@
             .print-container {
                 display: block;
                 font-family: "微軟正黑體", "標楷體", serif;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .print-header {
                 text-align: center;
-                margin: 0 0 15px 0; /* 縮小底部間距 */
+                margin: 0 0 10px 0; 
                 border-bottom: 2px solid var(--primary-accent);
-                padding-bottom: 12px; /* 縮小內距 */
+                padding-bottom: 8px;
             }
             .print-header h1 {
-                font-size: 24pt; /* 字體稍微調小以節省空間 */
+                font-size: 21pt; /* 縮小標題 */
                 color: var(--primary-dark);
-                margin: 0 0 12px 0;
-                letter-spacing: 5px;
+                margin: 0 0 8px 0;
+                letter-spacing: 4px;
             }
             .print-meta-grid {
                 display: flex;
                 justify-content: space-between;
-                font-size: 11pt;
+                font-size: 10pt;
                 color: #333;
-                padding: 0 15px; /* 稍微往內縮即可 */
+                padding: 0 10px; 
             }
             .print-meta-grid div {
                 display: flex;
@@ -552,8 +556,8 @@
             .print-meta-grid span.data-val {
                 font-weight: bold;
                 border-bottom: 1px solid #000;
-                padding: 0 15px;
-                min-width: 120px;
+                padding: 0 10px;
+                min-width: 100px;
                 text-align: center;
                 margin-left: 5px;
             }
@@ -561,12 +565,11 @@
             .fin-table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-bottom: 20px; /* 縮小表格與下方備註的距離 */
-                font-size: 11pt; /* 整體字體微調 */
-                page-break-inside: avoid; /* 強制表格不可從中間被切斷 */
+                margin-bottom: 12px; /* 縮小與下方區塊間距 */
+                font-size: 10.5pt;
             }
             .fin-table th, .fin-table td {
-                padding: 8px 12px; /* ★ 核心壓縮：減小每列的垂直高度 ★ */
+                padding: 5px 10px; /* ★ 極限壓縮表格高度 ★ */
                 border: 1px solid #cbd5e1;
             }
             .fin-table th {
@@ -574,8 +577,8 @@
                 color: white !important;
                 font-weight: bold;
                 text-align: center;
-                letter-spacing: 3px;
-                padding: 10px 12px; /* 標題列稍微保留高度 */
+                letter-spacing: 2px;
+                padding: 6px 10px;
             }
             .fin-table td.col-item { width: 70%; }
             .fin-table td.col-amt {
@@ -592,11 +595,12 @@
                 letter-spacing: 1px;
                 color: var(--primary-dark);
                 border-top: 2px solid var(--primary-dark);
+                padding: 6px 10px;
             }
             .row-indent td.col-item {
-                padding-left: 35px;
+                padding-left: 30px;
                 color: #475569;
-                font-size: 10.5pt;
+                font-size: 10pt;
             }
             .row-subtotal td {
                 border-top: 2px solid #000;
@@ -605,47 +609,47 @@
             .row-grand-total td {
                 border-top: 3px double var(--primary-dark);
                 background-color: #f1f5f9 !important;
-                font-size: 13pt;
+                font-size: 12.5pt;
                 font-weight: 900;
-                padding: 12px !important; /* 結果列稍微放大強調 */
+                padding: 8px 10px !important;
             }
             
             .print-notes {
                 border: 1px solid var(--border-color);
                 border-left: 4px solid var(--primary-accent);
-                padding: 15px 20px; /* 縮小內距 */
-                font-size: 9.5pt; /* 字體微縮，確保空間足夠 */
-                line-height: 1.5;
-                page-break-inside: avoid; /* 強制備註區塊不可被切斷 */
+                padding: 10px 15px; /* 縮小內距 */
+                font-size: 9pt; /* 縮小備註字體 */
+                line-height: 1.4;
+                page-break-inside: avoid; /* 防斷頁 */
             }
             .print-notes h4 {
-                margin: 0 0 10px 0;
-                font-size: 11pt;
+                margin: 0 0 6px 0;
+                font-size: 10.5pt;
                 color: var(--primary-dark);
                 border-bottom: 1px solid var(--border-color);
-                padding-bottom: 6px;
+                padding-bottom: 4px;
             }
             .print-notes ol {
                 margin: 0;
                 padding-left: 18px;
             }
             .print-notes li {
-                margin-bottom: 6px; /* 縮減條列間距 */
+                margin-bottom: 4px;
                 text-align: justify;
             }
             .print-tax-rules {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 8px; /* 縮減間距 */
-                margin: 8px 0 0 0;
-                padding: 8px 10px;
+                gap: 4px; 
+                margin: 6px 0 0 0;
+                padding: 6px 8px;
                 background-color: #f8fafc;
                 border: 1px solid #e2e8f0;
             }
             .print-tax-rules span {
                 width: 23%;
                 font-weight: bold;
-                font-size: 9pt;
+                font-size: 8.5pt;
             }
         }
     </style>
