@@ -392,7 +392,7 @@
             border: 1px solid var(--border-color);
             text-align: left;
             line-height: 1.5;
-            word-break: keep-all; /* 避免中文單字被截斷 */
+            word-break: keep-all; 
         }
         .tax-summary-table th {
             background-color: var(--primary-main);
@@ -401,23 +401,14 @@
             letter-spacing: 1px;
             font-size: 14px;
         }
-        /* 前三欄強制不換行，確保排版美觀 */
         .tax-summary-table th:nth-child(1), .tax-summary-table td:nth-child(1),
         .tax-summary-table th:nth-child(2), .tax-summary-table td:nth-child(2),
         .tax-summary-table th:nth-child(3), .tax-summary-table td:nth-child(3) {
             white-space: nowrap;
         }
-        
-        .tax-summary-table tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-        .tax-summary-table tr:hover {
-            background-color: #f1f5f9;
-        }
-        .tax-summary-table td:first-child {
-            font-weight: bold;
-            color: var(--primary-accent);
-        }
+        .tax-summary-table tr:nth-child(even) { background-color: #f8fafc; }
+        .tax-summary-table tr:hover { background-color: #f1f5f9; }
+        .tax-summary-table td:first-child { font-weight: bold; color: var(--primary-accent); }
         .table-section-title {
             margin: 40px 0 15px 0;
             padding-top: 20px;
@@ -469,21 +460,16 @@
         }
 
         /* =========================================
-           手機版 RWD 響應式設計 (專屬手機與小平板優化)
+           手機版 RWD 響應式設計 
            ========================================= */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
+            body { padding: 10px; }
             .web-container {
                 padding: 30px 20px;
                 border-top: 5px solid var(--primary-accent);
                 border-radius: 6px;
             }
-            .web-header-section h1 {
-                font-size: 22px;
-                letter-spacing: 2px;
-            }
+            .web-header-section h1 { font-size: 22px; letter-spacing: 2px; }
             .basic-info-grid {
                 grid-template-columns: 1fr;
                 gap: 15px;
@@ -502,38 +488,21 @@
                 width: 100%;
                 justify-content: flex-start;
             }
-            #lbl-spouse-deduct {
-                margin-left: auto; /* 將配偶扣除額推到最右邊 */
-            }
+            #lbl-spouse-deduct { margin-left: auto; }
             input[type="number"], input[type="text"], input[type="date"] {
                 max-width: 100%;
-                padding: 12px 14px; /* 加大觸控範圍 */
+                padding: 12px 14px; 
             }
-            .spousal-claim-block {
-                padding: 15px;
-                margin: 10px 0 20px 0;
-            }
-            .result-box {
-                padding: 25px 20px;
-            }
-            .rules-grid {
-                grid-template-columns: 1fr; /* 八大態樣變成單欄 */
-            }
-            .button-group {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .btn {
-                width: 100%;
-                padding: 16px;
-            }
-            .advisor-guide, .tax-rules-box {
-                padding: 20px 15px;
-            }
+            .spousal-claim-block { padding: 15px; margin: 10px 0 20px 0; }
+            .result-box { padding: 25px 20px; }
+            .rules-grid { grid-template-columns: 1fr; }
+            .button-group { flex-direction: column; gap: 15px; }
+            .btn { width: 100%; padding: 16px; }
+            .advisor-guide, .tax-rules-box { padding: 20px 15px; }
         }
 
         /* =========================================
-           列印版報告介面 (Print UI) - 留白優化版
+           列印版報告介面 (Print UI) 
            ========================================= */
         .print-container { display: none; }
 
@@ -826,8 +795,8 @@
         
         <div style="display: flex; flex-direction: column; width: 100%;">
             <div class="result-item" style="margin-bottom: 0;">
-                <span>總扣除額 <span class="info-icon" onclick="toggleInfo('desc-total-deductions', this)" style="background-color:rgba(255,255,255,0.2); color:white; border:none;">?</span></span>
-                <span class="val" id="web-totalDeductionsText">138</span>
+                <span>免稅與扣除額合計 <span class="info-icon" onclick="toggleInfo('desc-total-deductions', this)" style="background-color:rgba(255,255,255,0.2); color:white; border:none;">?</span></span>
+                <span class="val" id="web-totalTaxFreeText">1471</span>
             </div>
             <div id="desc-total-deductions" class="description-box" style="margin-top: 15px; margin-bottom: 20px; background-color: rgba(255,255,255,0.05); border-left: 3px solid var(--primary-accent); color: #e2e8f0;">
                 </div>
@@ -1042,15 +1011,15 @@
                 <td class="col-amt">138</td>
             </tr>
             <tr class="row-subtotal">
-                <td class="col-item">扣除額小計</td>
-                <td class="col-amt" id="out-totalDeductions">138</td>
+                <td class="col-item">免稅與各項扣除額合計</td>
+                <td class="col-amt" id="out-totalTaxFree">1471</td>
             </tr>
 
             <tr class="row-section">
                 <td colspan="2">參、稅額計算結果</td>
             </tr>
             <tr>
-                <td class="col-item">課稅遺產淨額 (總額 - 免稅額 - 扣除額)</td>
+                <td class="col-item">課稅遺產淨額 (總額 - 免稅與扣除額合計)</td>
                 <td class="col-amt" id="out-netEstate">0</td>
             </tr>
             <tr>
@@ -1175,7 +1144,7 @@
         const unpaidDebt = parseFloat(document.getElementById('unpaidDebt').value) || 0;
         const unpaidTaxes = parseFloat(document.getElementById('unpaidTaxes').value) || 0;
 
-        // 2. 扣除額計算
+        // 2. 扣除額與免稅額計算
         const exemption = 1333; 
         const funeralDeduction = 138; 
         const spouseDeduction = hasSpouse ? 553 : 0;
@@ -1183,9 +1152,11 @@
         const parentDeduction = 138 * parentCount;
         const disabilityDeduction = 693 * disabilityCount;
 
+        // 算出總扣除額，再將免稅額加上去成為「免稅與扣除額合計 (Tax Free Amount)」
         const totalDeductions = funeralDeduction + spouseDeduction + spousalClaim + descendantDeduction + parentDeduction + disabilityDeduction + unpaidDebt + unpaidTaxes;
+        const totalTaxFreeAmount = exemption + totalDeductions;
 
-        let netEstate = totalEstate - exemption - totalDeductions;
+        let netEstate = totalEstate - totalTaxFreeAmount;
         if (netEstate < 0) netEstate = 0;
 
         // 3. 稅額計算
@@ -1206,13 +1177,14 @@
 
         // 4. 更新 Web UI
         document.getElementById('lbl-spouse-deduct').innerText = hasSpouse ? "553" : "0";
-        document.getElementById('web-totalDeductionsText').innerText = formatNumber(totalDeductions);
+        document.getElementById('web-totalTaxFreeText').innerText = formatNumber(totalTaxFreeAmount);
         document.getElementById('web-netEstateText').innerText = formatNumber(netEstate);
         document.getElementById('web-taxRateText').innerText = taxRate;
         document.getElementById('web-taxPayableText').innerText = formatNumber(Math.max(0, taxPayable));
 
-        // 動態生成扣除額加總明細
-        let breakdownHTML = `<strong style="color: var(--primary-accent); font-size: 15px;">扣除額計算明細：</strong><br>`;
+        // 動態生成包含免稅額的計算明細
+        let breakdownHTML = `<strong style="color: var(--primary-accent); font-size: 15px;">免稅與扣除額計算明細：</strong><br>`;
+        breakdownHTML += `• 法定免稅額：1,333 萬元<br>`;
         breakdownHTML += `• 喪葬費固定扣除：138 萬元<br>`;
         if (spouseDeduction > 0) breakdownHTML += `• 配偶扣除額：${formatNumber(spouseDeduction)} 萬元<br>`;
         if (spousalClaim > 0) breakdownHTML += `• 剩餘財產差額分配請求權：${formatNumber(spousalClaim)} 萬元<br>`;
@@ -1222,7 +1194,7 @@
         if (unpaidDebt > 0) breakdownHTML += `• 未償債務：${formatNumber(unpaidDebt)} 萬元<br>`;
         if (unpaidTaxes > 0) breakdownHTML += `• 未納稅捐：${formatNumber(unpaidTaxes)} 萬元<br>`;
         breakdownHTML += `<div style="border-top: 1px dashed rgba(255,255,255,0.2); margin: 10px 0;"></div>`;
-        breakdownHTML += `<strong style="color: #fff;">＝ 小計：${formatNumber(totalDeductions)} 萬元</strong>`;
+        breakdownHTML += `<strong style="color: #fff;">＝ 合計：${formatNumber(totalTaxFreeAmount)} 萬元</strong>`;
         
         document.getElementById('desc-total-deductions').innerHTML = breakdownHTML;
 
@@ -1239,7 +1211,8 @@
         document.getElementById('out-debt').innerText = formatNumber(unpaidDebt);
         document.getElementById('out-tax').innerText = formatNumber(unpaidTaxes);
         
-        document.getElementById('out-totalDeductions').innerText = formatNumber(totalDeductions);
+        // 輸出包含 1333 免稅額的總合
+        document.getElementById('out-totalTaxFree').innerText = formatNumber(totalTaxFreeAmount);
         document.getElementById('out-netEstate').innerText = formatNumber(netEstate);
         document.getElementById('out-taxRate').innerText = taxRate;
         document.getElementById('out-taxPayable').innerText = formatNumber(Math.max(0, taxPayable));
