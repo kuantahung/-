@@ -469,6 +469,70 @@
         }
 
         /* =========================================
+           手機版 RWD 響應式設計 (專屬手機與小平板優化)
+           ========================================= */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .web-container {
+                padding: 30px 20px;
+                border-top: 5px solid var(--primary-accent);
+                border-radius: 6px;
+            }
+            .web-header-section h1 {
+                font-size: 22px;
+                letter-spacing: 2px;
+            }
+            .basic-info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 20px 15px;
+            }
+            .form-row {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 12px 5px;
+            }
+            .form-row label {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .input-area {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            #lbl-spouse-deduct {
+                margin-left: auto; /* 將配偶扣除額推到最右邊 */
+            }
+            input[type="number"], input[type="text"], input[type="date"] {
+                max-width: 100%;
+                padding: 12px 14px; /* 加大觸控範圍 */
+            }
+            .spousal-claim-block {
+                padding: 15px;
+                margin: 10px 0 20px 0;
+            }
+            .result-box {
+                padding: 25px 20px;
+            }
+            .rules-grid {
+                grid-template-columns: 1fr; /* 八大態樣變成單欄 */
+            }
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .btn {
+                width: 100%;
+                padding: 16px;
+            }
+            .advisor-guide, .tax-rules-box {
+                padding: 20px 15px;
+            }
+        }
+
+        /* =========================================
            列印版報告介面 (Print UI) - 留白優化版
            ========================================= */
         .print-container { display: none; }
